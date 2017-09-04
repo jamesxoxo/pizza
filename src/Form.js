@@ -6,8 +6,8 @@ class Input extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      diameter: 0,
-      price: 0,
+      diameter: '',
+      price: '',
       isTwo: false
     };
 
@@ -54,6 +54,7 @@ class Input extends Component {
           unit="inch"
           onChange={this.handleDiameterChange}
           value={this.state.diameter}
+          placeholder="Please enter the size of the pizza"
         />
         <TextInput
           id="price"
@@ -62,6 +63,7 @@ class Input extends Component {
           unit="£"
           onChange={this.handlePriceChange}
           value={this.state.price}
+          placeholder="Please enter the price of the pizza"
         />
         <IsTwo
           onChange={this.handleIsTwoChange}
