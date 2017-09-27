@@ -38,7 +38,7 @@ class List extends Component {
                 <td>{pizza.isTwo.toString()}</td>
                 <td>{round(pizza.area)}</td>
                 <td>{round(pizza.areaPerPound)}</td>
-                <td><a href="#" onClick={this.handleClick}>Remove</a></td>
+                <td><a href="#" onClick={this.handleClick}>&times;</a></td>
               </tr>
             );
           })}
