@@ -23,6 +23,7 @@ class TextInput extends Component {
             onChange={this.handleChange}
             value={this.props.value}
             placeholder={this.props.placeholder}
+            min={this.props.min}
           />
           <InputGroup.Addon>{this.props.unit}</InputGroup.Addon>
         </InputGroup>

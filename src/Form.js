@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import TextInput from './TextInput';
 import IsTwo from './IsTwo';
+import Button from './Button';
+import List from './List';
+import round from './round';
 
 class Input extends Component {
   constructor(props) {
@@ -8,42 +11,84 @@ class Input extends Component {
     this.state = {
       diameter: '',
       price: '',
-      isTwo: false
+      isTwo: false,
+      area: 0,
+      areaPerPound: 0,
+      validPizza: false,
+      savedPizzas: [],
     };
 
     this.handleDiameterChange = this.handleDiameterChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleIsTwoChange = this.handleIsTwoChange.bind(this);
+    this.handleSavePizza = this.handleSavePizza.bind(this);
+    this.handleRemoveSavedPizza = this.handleRemoveSavedPizza.bind(this);
   }
 
   handleDiameterChange(diameter) {
     this.setState({
       diameter
+    }, () => {
+      this.calculate();
     });
   }
 
   handlePriceChange(price) {
     this.setState({
       price
+    }, () => {
+      this.calculate();
     });
   }
 
   handleIsTwoChange(isTwo) {
     this.setState({
       isTwo
+    }, () => {
+      this.calculate();
     });
   }
 
-  round(num) {
-    return Math.round(num * 100) / 100;
+  handleSavePizza() {
+    this.setState({
+      savedPizzas: [...this.state.savedPizzas, {
+        diameter: this.state.diameter,
+        price: this.state.price,
+        isTwo: this.state.isTwo,
+        area: this.state.area,
+        areaPerPound: this.state.areaPerPound,
+      }]
+    });
+
+    this.setState({
+      diameter: '',
+      price: '',
+      isTwo: false,
+    }, () => {
+      this.calculate();
+    });
   }
 
-  render() {
+  handleRemoveSavedPizza() {
+    alert('doesn\'t work yet :(');
+  }
+
+  calculate() {
     const radius = this.state.diameter / 2;
     let area = Math.PI * radius * radius;
     area = this.state.isTwo ? area * 2 : area;
-    const areaPerPound = area / this.state.price || 0;
+    let areaPerPound = area / this.state.price || 0;
+    areaPerPound = Number.isFinite(areaPerPound) ? areaPerPound : 0;
+    const validPizza = !!area && !!areaPerPound;
 
+    this.setState({
+      area,
+      areaPerPound,
+      validPizza,
+    });
+  }
+
+  render() {
     return (
       <div>
         <h1>Calculator</h1>
@@ -55,6 +100,7 @@ class Input extends Component {
           onChange={this.handleDiameterChange}
           value={this.state.diameter}
           placeholder="Please enter the size of the pizza"
+          min="0"
         />
         <TextInput
           id="price"
@@ -64,13 +110,22 @@ class Input extends Component {
           onChange={this.handlePriceChange}
           value={this.state.price}
           placeholder="Please enter the price of the pizza"
+          min="0"
         />
         <IsTwo
           onChange={this.handleIsTwoChange}
           value={this.state.isTwo}
         />
-        <p>Pizza area: {this.round(area)} in<sup>2</sup></p>
-        <p>Pizza area per pound: {this.round(areaPerPound)} in<sup>2</sup>/£ </p>
+        <p>Pizza area: {round(this.state.area)} in<sup>2</sup></p>
+        <p>Pizza area per pound: {round(this.state.areaPerPound)} in<sup>2</sup>/£ </p>
+        <Button
+          onClick={this.handleSavePizza}
+          disabled={!this.state.validPizza}
+        />
+        <List
+          pizzas={this.state.savedPizzas}
+          onClick={this.handleRemoveSavedPizza}
+        />
       </div>
     )
   }
