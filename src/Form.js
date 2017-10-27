@@ -5,7 +5,7 @@ import Button from './Button';
 import List from './List';
 import round from './round';
 
-class Input extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,8 +69,8 @@ class Input extends Component {
     });
   }
 
-  handleRemoveSavedPizza() {
-    alert('doesn\'t work yet :(');
+  handleRemoveSavedPizza(id) {
+    this.setState(prevState => ({ savedPizzas: prevState.savedPizzas.filter((pizza, i) => i !== id) }));
   }
 
   calculate() {
@@ -131,4 +131,4 @@ class Input extends Component {
   }
 }
 
-export default Input;
+export default Form;

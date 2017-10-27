@@ -10,8 +10,10 @@ class List extends Component {
   }
 
   handleClick(e) {
+    const id = parseInt(e.target.dataset.id, 10);
+
     e.preventDefault();
-    this.props.onClick();
+    this.props.onClick(id);
   }
 
   render() {
@@ -38,7 +40,7 @@ class List extends Component {
                 <td>{pizza.isTwo.toString()}</td>
                 <td>{round(pizza.area)}</td>
                 <td>{round(pizza.areaPerPound)}</td>
-                <td><a href="#" onClick={this.handleClick}>&times;</a></td>
+                <td><a href="#" data-id={i} onClick={this.handleClick}>&times;</a></td>
               </tr>
             );
           })}
