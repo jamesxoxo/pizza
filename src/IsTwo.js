@@ -17,7 +17,7 @@ class IsTwo extends Component {
     return (
       <Checkbox
         onChange={this.handleChange}
-        value={this.props.value}
+        checked={this.props.checked}
       > 2 for 1
       </Checkbox>
     );
