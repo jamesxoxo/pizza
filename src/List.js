@@ -16,6 +16,10 @@ class List extends Component {
     this.props.onClick(id);
   }
 
+  isHighest(pizza, property) {
+    return pizza[property] >= this.props.pizzas.sort((a, b) => b[property] - a[property])[0][property];
+  }
+
   render() {
     return (
       <div>
@@ -33,13 +37,16 @@ class List extends Component {
           </thead>
           <tbody>
           {this.props.pizzas.map((pizza, i) => {
+            const isLargest = this.isHighest(pizza, 'area');
+            const isBestValue = this.isHighest(pizza, 'areaPerPound');
+
             return (
               <tr key={i}>
                 <td>{pizza.diameter}</td>
                 <td>{pizza.price}</td>
                 <td>{pizza.isTwo.toString()}</td>
-                <td>{round(pizza.area)}</td>
-                <td>{round(pizza.areaPerPound)}</td>
+                <td className={isLargest ? 'success' : ''}>{round(pizza.area)}</td>
+                <td className={isBestValue ? 'success' : ''}>{round(pizza.areaPerPound)}</td>
                 <td><a href="#" data-id={i} onClick={this.handleClick}>&times;</a></td>
               </tr>
             );

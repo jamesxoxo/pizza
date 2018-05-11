@@ -114,7 +114,7 @@ class Form extends Component {
         />
         <IsTwo
           onChange={this.handleIsTwoChange}
-          checked={this.state.isTwo}
+          value={this.state.isTwo}
         />
         <p>Pizza area: {round(this.state.area)} in<sup>2</sup></p>
         <p>Pizza area per pound: {round(this.state.areaPerPound)} in<sup>2</sup>/£ </p>
